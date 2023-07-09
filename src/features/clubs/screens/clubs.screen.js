@@ -74,8 +74,6 @@ export const ClubsScreen = () => {
                             return <ClubInfo key={club.id} data={club} />
                         })}
                     </ScrollView>
-
-                    <StatusBar style="auto" />
                 </View>
             </SafeAreaView>
             <StatusBar style="auto" />

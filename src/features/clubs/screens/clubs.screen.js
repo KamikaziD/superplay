@@ -32,6 +32,13 @@ const testData = [
         img: 370,
         description: 'Aaarrrggh, Paddle me balls',
     },
+    {
+        id: 4,
+        club: 'Hillcrest Outdoor Paddle Club',
+        location: 'Hillcrest',
+        img: 371,
+        description: 'Paddle Club in the hills',
+    },
 ]
 
 export const ClubsScreen = () => {
@@ -40,6 +47,10 @@ export const ClubsScreen = () => {
         console.log(e)
         return setSearchQuery(e)
     }
+    testData.sort((a, b) => {
+        return a.club > b.club ? 1 : b.club > a.club ? -1 : 0
+    })
+
     const filteredData = testData.filter((club) => {
         return (
             club.club
@@ -70,8 +81,13 @@ export const ClubsScreen = () => {
                 </View>
                 <View style={styles.list}>
                     <ScrollView style={styles.scroll}>
-                        {filteredData.map((club) => {
-                            return <ClubInfo key={club.id} data={club} />
+                        {filteredData.map((club, index) => {
+                            return (
+                                <ClubInfo
+                                    key={`${club.id}-${index}`}
+                                    data={club}
+                                />
+                            )
                         })}
                     </ScrollView>
                 </View>
@@ -97,5 +113,6 @@ const styles = StyleSheet.create({
     },
     scroll: {
         padding: 5,
+        paddingBottom: 50,
     },
 })

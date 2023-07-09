@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, StatusBar } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { Avatar, Button, Card, Text } from 'react-native-paper'
 
 const LeftContent = (props) => <Avatar.Icon {...props} icon="tennis" />
@@ -19,8 +19,13 @@ export const ClubInfo = (props) => {
                     source={{ uri: `https://picsum.photos/${data.img}` }}
                 />
                 <Card.Content styles={styles.content}>
-                    <Text variant="titleLarge">{data.club}</Text>
-                    <Text variant="bodyMedium">{data.description}</Text>
+                    <Text variant="bodyMedium">{data.club}</Text>
+                    <View style={styles.row}>
+                        <Text variant="bodyMedium">{data.description}</Text>
+
+                        {/* <Text variant="bodySmall">location</Text> */}
+                        <Button style={styles.button}>Book Now</Button>
+                    </View>
                 </Card.Content>
 
                 {/* <Card.Actions>
@@ -51,5 +56,17 @@ const styles = StyleSheet.create({
     cover: {
         marginBottom: 2,
         marginTop: 2,
+    },
+    row: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingTop: 5,
+        paddingBottom: 5,
+    },
+    button: {
+        backgroundColor: '#aa005530',
+        color: '#fff',
     },
 })

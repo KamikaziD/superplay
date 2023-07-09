@@ -25,6 +25,18 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "97f71be1-0211-4cf9-bd8c-271d67dabf63"
+      }
+    },
+    "owner": "kamikazid",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/97f71be1-0211-4cf9-bd8c-271d67dabf63"
     }
   }
 }

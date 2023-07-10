@@ -1,43 +1,57 @@
 import React, { useState } from 'react'
-import {
-    StatusBar,
-    StyleSheet,
-    Text,
-    View,
-    SafeAreaView,
-    ScrollView,
-} from 'react-native'
-import { Searchbar } from 'react-native-paper'
+import { StatusBar, StyleSheet, SafeAreaView, FlatList } from 'react-native'
 import { ClubInfo } from '../components/club-info.component'
+import {
+    ListView,
+    Scroller,
+    SearchView,
+    SearchInput,
+} from '../components/styled.components'
 
 const testData = [
     {
         id: 1,
-        club: 'Royal Paddle Club',
-        location: 'Durban',
-        img: 500,
+        name: 'Royal Paddle Club',
+        address: 'Durban',
+        photos: 500,
         description: 'Paddle Club fit for Kings',
+        icon: '',
+        openingHours: '',
+        rating: 4,
+        isClosedTmp: false,
     },
     {
         id: 2,
-        club: 'Umhlanga Paddle Club',
-        location: 'Umhlanga',
-        img: 300,
+        name: 'Umhlanga Paddle Club',
+        address: 'Umhlanga',
+        photos: 300,
         description: 'Paddle Club that Rocks',
+        icon: '',
+        openingHours: '',
+        rating: 4,
+        isClosedTmp: false,
     },
     {
         id: 3,
-        club: 'Pirates Paddle Club',
-        location: 'Durban North',
-        img: 370,
+        name: 'Pirates Paddle Club',
+        address: 'Durban North',
+        photos: 370,
         description: 'Aaarrrggh, Paddle me balls',
+        icon: '',
+        openingHours: '',
+        rating: 4,
+        isClosedTmp: false,
     },
     {
         id: 4,
-        club: 'Hillcrest Outdoor Paddle Club',
-        location: 'Hillcrest',
-        img: 371,
+        name: 'Hillcrest Outdoor Paddle Club',
+        address: 'Hillcrest',
+        photos: 371,
         description: 'Paddle Club in the hills',
+        icon: '',
+        openingHours: '',
+        rating: 4,
+        isClosedTmp: false,
     },
 ]
 
@@ -48,15 +62,15 @@ export const ClubsScreen = () => {
         return setSearchQuery(e)
     }
     testData.sort((a, b) => {
-        return a.club > b.club ? 1 : b.club > a.club ? -1 : 0
+        return a.name > b.name ? 1 : b.name > a.name ? -1 : 0
     })
 
     const filteredData = testData.filter((club) => {
         return (
-            club.club
+            club.name
                 .toLocaleLowerCase()
                 .includes(searchQuery.toLocaleLowerCase()) ||
-            club.location
+            club.address
                 .toLocaleLowerCase()
                 .includes(searchQuery.toLocaleLowerCase()) ||
             club.description
@@ -67,8 +81,8 @@ export const ClubsScreen = () => {
     return (
         <>
             <SafeAreaView style={styles.container}>
-                <View style={styles.search}>
-                    <Searchbar
+                <SearchView style={styles.search}>
+                    <SearchInput
                         placeholder="Search"
                         onChangeText={onChangeSearch}
                         onClearIconPress={() => {
@@ -78,19 +92,15 @@ export const ClubsScreen = () => {
                         showDivider={true}
                         value={searchQuery}
                     />
-                </View>
-                <View style={styles.list}>
-                    <ScrollView style={styles.scroll}>
-                        {filteredData.map((club, index) => {
-                            return (
-                                <ClubInfo
-                                    key={`${club.id}-${index}`}
-                                    data={club}
-                                />
-                            )
-                        })}
-                    </ScrollView>
-                </View>
+                </SearchView>
+                <ListView>
+                    <FlatList
+                        data={filteredData}
+                        renderItem={(club) => <ClubInfo club={club.item} />}
+                        keyExtractor={(item) => item.id}
+                        contentContainerStyle={{ padding: 10 }}
+                    />
+                </ListView>
             </SafeAreaView>
             <StatusBar style="auto" />
         </>
@@ -100,19 +110,9 @@ export const ClubsScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        // backgroundColor: '#5fa8d3',
         backgroundColor: '#fff',
         marginTop: StatusBar.currentHeight,
-    },
-    search: {
-        padding: 16,
-        backgroundColor: '#ffffff',
-    },
-    list: {
-        flex: 1,
-        backgroundColor: '#fff',
-    },
-    scroll: {
-        padding: 5,
-        paddingBottom: 50,
+        marginBottom: 20,
     },
 })

@@ -1,62 +1,100 @@
-import React from 'react'
-import { StyleSheet, View } from 'react-native'
-import { Avatar, Button, Card, Text } from 'react-native-paper'
+import React, { useEffect, useRef, useState } from 'react'
+import styled from 'styled-components/native'
+import { StyleSheet, View, Animated, Button } from 'react-native'
+import { Avatar, Card, Text } from 'react-native-paper'
 
-const LeftContent = (props) => <Avatar.Icon {...props} icon="tennis" />
+import { StyledButton, StyledCover, StyledText } from './styled.components'
 
-export const ClubInfo = (props) => {
-    const data = props.data
+const ClubCard = styled(Card)`
+    background-color: #fff;
+    border-radius: 10px;
+    margin: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    shadow-color: '#000';
+    shadow-offset: 5px 5px;
+    shadow-opacity: 0.15;
+    shadow-radius: 3px;
+    elevation: 5;
+`
+
+const LeftContent = (props) => {
+    return <Avatar.Icon {...props} icon="tennis" />
+}
+
+export const ClubInfo = ({ club }) => {
+    const data = club.club
+    const {
+        name,
+        icon,
+        photos,
+        address,
+        description,
+        openingHours,
+        rating,
+        isClosedTmp,
+    } = club
+
+    const fadeAnim = useRef(new Animated.Value(1)).current
+    const [pressed, setPressed] = useState(false)
+
+    useEffect(() => {
+        console.log(pressed)
+    }, [pressed])
+
+    const fadeIn = () => {
+        // Will change fadeAnim value to 1 in 2 seconds
+        Animated.timing(fadeAnim, {
+            toValue: 1,
+            duration: 2000,
+            useNativeDriver: true,
+        }).start()
+        setPressed(!pressed)
+    }
+
+    const fadeOut = () => {
+        // Will change fadeAnim value to 0 in 2 seconds
+        Animated.timing(fadeAnim, {
+            toValue: 0,
+            duration: 3000,
+            useNativeDriver: true,
+        }).start()
+        setPressed(!pressed)
+    }
     return (
         <>
-            <Card style={styles.container}>
+            <ClubCard>
                 <Card.Title
-                    title={data.club}
-                    subtitle={data.location}
+                    title={name}
+                    subtitle={address}
                     left={LeftContent}
                 />
-                <Card.Cover
-                    style={styles.cover}
-                    source={{ uri: `https://picsum.photos/${data.img}` }}
-                />
+                <Animated.View style={[{ opacity: fadeAnim }]}>
+                    <StyledCover
+                        source={{ uri: `https://picsum.photos/${photos}` }}
+                    />
+                </Animated.View>
                 <Card.Content styles={styles.content}>
-                    <Text variant="bodyMedium">{data.club}</Text>
+                    <Text variant="bodyLarge">{name}</Text>
                     <View style={styles.row}>
-                        <Text variant="bodyMedium">{data.description}</Text>
+                        <Text variant="bodySmall">{description}</Text>
 
-                        {/* <Text variant="bodySmall">location</Text> */}
-                        <Button style={styles.button}>Book Now</Button>
+                        <Button
+                            style={{
+                                color: `${(props) =>
+                                    props.theme.colors.ui.primary}`,
+                            }}
+                            title="Book Now"
+                            onPress={pressed ? fadeIn : fadeOut}
+                        />
                     </View>
                 </Card.Content>
-
-                {/* <Card.Actions>
-                    <Button>Cancel</Button>
-                    <Button>Ok</Button>
-                </Card.Actions> */}
-            </Card>
+            </ClubCard>
         </>
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        margin: 5,
-        paddingLeft: 5,
-        paddingRight: 5,
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4.84,
-
-        elevation: 5,
-    },
-    content: {},
-    cover: {
-        marginBottom: 2,
-        marginTop: 2,
-    },
     row: {
         display: 'flex',
         flexDirection: 'row',

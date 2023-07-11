@@ -81,7 +81,7 @@ export const ClubsScreen = () => {
     return (
         <>
             <SafeAreaView style={styles.container}>
-                <SearchView style={styles.search}>
+                <SearchView>
                     <SearchInput
                         placeholder="Search"
                         onChangeText={onChangeSearch}
@@ -110,9 +110,7 @@ export const ClubsScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // backgroundColor: '#5fa8d3',
         backgroundColor: '#fff',
         marginTop: StatusBar.currentHeight,
-        marginBottom: 20,
     },
 })

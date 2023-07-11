@@ -1,4 +1,5 @@
 import styled from 'styled-components/native'
+import { StatusBar } from 'react-native'
 
 import {
     Avatar,

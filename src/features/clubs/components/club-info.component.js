@@ -4,6 +4,8 @@ import { StyleSheet, View, Animated, Button } from 'react-native'
 import { Avatar, Card, Text } from 'react-native-paper'
 
 import { StyledButton, StyledCover, StyledText } from './styled.components'
+import { Touchable } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const ClubCard = styled(Card)`
     background-color: #fff;
@@ -19,7 +21,20 @@ const ClubCard = styled(Card)`
 `
 
 const LeftContent = (props) => {
-    return <Avatar.Icon {...props} icon="tennis" />
+    return (
+        <Avatar.Icon
+            {...props}
+            style={{
+                backgroundColor: 'none',
+                borderWidth: 2,
+                borderColor: '#1982c4',
+                borderBottomRightRadius: 1,
+                borderStyle: 'solid',
+            }}
+            color="#1982c4"
+            icon="tennis"
+        />
+    )
 }
 
 export const ClubInfo = ({ club }) => {
@@ -78,15 +93,16 @@ export const ClubInfo = ({ club }) => {
                     <Text variant="bodyLarge">{name}</Text>
                     <View style={styles.row}>
                         <Text variant="bodySmall">{description}</Text>
-
-                        <Button
-                            style={{
-                                color: `${(props) =>
-                                    props.theme.colors.ui.primary}`,
-                            }}
-                            title="Book Now"
+                        <TouchableOpacity
+                            icon="camera"
+                            activeOpacity={0.2}
+                            disabled={false}
+                            style={styles.button}
                             onPress={pressed ? fadeIn : fadeOut}
-                        />
+                        >
+                            <Text style={styles.text}>Check</Text>
+                            <Text style={styles.text}>Availability</Text>
+                        </TouchableOpacity>
                     </View>
                 </Card.Content>
             </ClubCard>
@@ -104,7 +120,20 @@ const styles = StyleSheet.create({
         paddingBottom: 5,
     },
     button: {
-        backgroundColor: '#aa005530',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 5,
+        height: 35,
+        width: 'auto',
+        padding: 5,
+        backgroundColor: '#1982c4',
         color: '#fff',
+        shadowColor: '#000',
+        shadowOffset: { width: 3, height: 3 },
+        shadowOpacity: 0.35,
+        shadowRadius: 2,
+        elevation: 5,
     },
+    text: { color: '#fff', fontSize: 10, fontWeight: 'light' },
 })

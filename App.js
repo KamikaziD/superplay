@@ -78,7 +78,7 @@ function MyTabs() {
                     )
                 },
                 headerShown: false,
-                tabBarActiveTintColor: '#5fa8d3',
+                tabBarActiveTintColor: '#1982c4',
                 tabBarInactiveTintColor: 'gray',
             })}
         >
